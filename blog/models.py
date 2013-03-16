@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils.text import slugify
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -9,6 +11,7 @@ class Post(models.Model):
   slug = models.SlugField(max_length=255, blank=True, default='')
   content = models.TextField()
   published = models.BooleanField(default=True)
+  author = models.ForeignKey(User, related_name="posts")
     
   def __unicode__(self):
     return self.title
@@ -18,3 +21,5 @@ class Post(models.Model):
       self.slug = slugify(self.title)
     super(Post, self).save(*args, **kwargs)
 
+  class Meta:
+    ordering = ["-created_at", "title"]
