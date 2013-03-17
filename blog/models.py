@@ -2,8 +2,6 @@ from django.db import models
 from django.utils.text import slugify
 from django.contrib.auth.models import User
 
-# Create your models here.
-
 class Post(models.Model):
   created_at = models.DateTimeField(auto_now_add=True, editable=False)
   updated_at = models.DateTimeField(auto_now=True, editable=False)
@@ -23,3 +21,6 @@ class Post(models.Model):
 
   class Meta:
     ordering = ["-created_at", "title"]
+
+  def get_absolute_url(self):
+    return ("blog:detail", (), {"slug" : self.slug})
