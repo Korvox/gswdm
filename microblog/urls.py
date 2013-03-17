@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
 #from django.views.generic import TemplateView
 from . import views
+from django.conf import settings
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -15,4 +16,8 @@ urlpatterns = patterns('',
   url(r'^admin/', include(admin.site.urls)),
   url(r"^$", views.HomepageView.as_view(), name="home"),
   url(r"^blog/", include("blog.urls", namespace="blog")),
+)
+
+urlpatterns += patterns('',
+  (r'^static/(.*)$', 'django.views.static.serve', {'document_root' : settings.STATIC_ROOT}),
 )
